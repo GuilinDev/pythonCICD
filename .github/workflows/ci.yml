@@ -31,7 +31,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/myflaskapp:latest
+        tags: ${{ secrets.DOCKER_USERNAME }}/guilindevflaskapp:latest
 
     - name: Deploy to Kubernetes
       run: echo "The deployment step can be handled by ArgoCD which will monitor the Docker image for updates."
