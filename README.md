@@ -1,6 +1,6 @@
 # PythonCICD demo on Mac
 
-### install kind
+### 1. install kind
 ```shell
 # check version for kind, 0.22.0 is for kubectl 1.29.2
 curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.22.0/kind-$(uname)-amd64
@@ -8,7 +8,7 @@ chmod +x ./kind
 sudo mv ./kind /usr/local/bin/kind
 ```
 
-### install k8s cluster by kind
+### 2. install k8s cluster by kind
 Create kind-config.yaml for k8s cluster
 ```yaml
 kind: Cluster
@@ -23,7 +23,7 @@ apply
 kind create cluster --config kind-config.yaml
 ```
 
-### install argoCD
+### 3. install argoCD
 ```shell
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
@@ -43,10 +43,14 @@ kubectl -n argocd patch secret argocd-secret \
 
 ```
 
-### install helm
+### 4. install helm
+```shell
+brew install helm 
+```
 
+### 5. integrate Github repo to docker hub/local argoCD ui
 
-### access flask app
+### 5. access flask app
 ```shell
 # find k8s Loadbalancers EXTERNAL-IP
 kubectl get svc python-flask-app-service -n guilindev
@@ -56,3 +60,7 @@ kubectl port-forward svc/python-flask-app-service 5000:80 -n guilindev
 # http://localhost:5000/
 ```
 
+in case argoCD can't use the updated image:
+```shell
+kubectl rollout restart deployment/python-flask-app -n guilindev
+```
