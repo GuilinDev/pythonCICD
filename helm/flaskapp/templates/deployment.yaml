@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: python-flask-app
-  namespace: guilindev
+  namespace: {{ .Values.namespace }}
 spec:
-  replicas: 3 
+  replicas: 3
   selector:
     matchLabels:
       app: python-flask-app
@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: python-flask-app
-        image: guilindev/guilindevflaskapp:latest  
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         ports:
-        - containerPort: 5000  
+        - containerPort: 5000
